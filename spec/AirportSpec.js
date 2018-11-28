@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Airport', function () {
 
   var plane;
@@ -6,46 +8,27 @@ describe('Airport', function () {
   beforeEach(function() {
     airport = new Airport();
     plane = jasmine.createSpy('plane',['land']);
-    plane1 = new Plane("Boeing");
-    plane2 = new Plane("Airbus");
-
   });
 
-  it('has no planes by default', function(){
-    expect(airport.hangar).toEqual([]);
+  it('has no planes by default', function() {
+    expect(airport.planes()).toEqual([]);
   });
 
-  describe('land', function() {
-
-    it('makes a plane landing', function() {
-      airport.land(plane1)
-      expect(airport.hangar).toContain(plane1)
-    });
-
+  it('can clear planes for landing', function() {
+    airport.clearforLanding(plane);
+    expect(airport.planes()).toEqual([plane])
   });
 
-  describe('takeoff', function() {
-
-    it('makes a plane take-off', function() {
-      airport.land(plane1)
-      airport.land(plane2)
-      airport.takeoff(plane1)
-      expect(airport.hangar).not.toContain(plane1)
-    });
-
+  it('can clear planes for takeoff', function() {
+    airport.clearforLanding(plane)
+    airport.clearforTakeOff(plane);
+    expect(airport.planes()).toEqual([]);
   });
 
-//   describe('is stormy', function () {
-//
-//     it('checks if the weather is stormy', function() {
-//       plane.land(airport)
-//       spyOn(airport,'isStormy').and.returnValue(true);
-//       expect(function(){ plane.takeoff();}).toThrowError('cannot takeoff during storm');
-//       expect(airport.hangar).toContain(plane);
-//     });
-//
-//   });
-//
+  it('checks if the weather is stormy', function() {
+    expect(airport.isStormy()).toBeFalsy();
+  });
+
 });
 
 

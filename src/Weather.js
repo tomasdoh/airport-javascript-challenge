@@ -1,3 +1,5 @@
+'use strict';
+
 function WeatherReporter() {
   this._weather = ["Sunny", "Cloudy", "Overcast", "Stormy"];
 };
